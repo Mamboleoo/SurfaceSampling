@@ -12,7 +12,7 @@ body {
 	margin: 0;
 	--color-text: #111;
 	--color-bg: #fff;
-	--color-link: #aaa;
+	--color-link: #ea5d70;
 	--color-link-hover: #000;
 	color: var(--color-text);
 	background-color: var(--color-bg);
