@@ -1,21 +1,12 @@
-*How to use this template:*
-
-- The general styles for the demo page are in css/base.css
-- The README.md can be used to add credits of resources used
-- For writing the tutorial, take a look at https://github.com/crnacura/CodropsTemplate/wiki/Writing-the-article
-- Delete this 'how to' in the final version and leave the following (fill in title/description, credits and social links, we'll do the rest):
-
--------
-
-# The Title
+# Surface Sampling in Three.js
 
 *A description of the demo goes here.*
 
-![Image Title](https://generative-placeholders.glitch.me/image?width=800&height=600")
+![Image Title](https://tympanus.net/codrops/wp-content/uploads/2021/08/SurfaceSampling.jpg)
 
-[Article on Codrops](https://tympanus.net/codrops/?p=)
+[Article on Codrops](https://tympanus.net/codrops/?p=56350)
 
-[Demo](http://tympanus.net/Development/.../)
+[Demo](http://tympanus.net/Tutorials/SurfaceSampling/)
 
 
 ## Installation
