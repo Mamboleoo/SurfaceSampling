@@ -7,7 +7,7 @@
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
 		<meta name="author" content="Codrops" />
-		<link rel="shortcut icon" href="favicon.ico">
+		<link rel="shortcut icon" href="img/favicon.ico">
 		<link rel="stylesheet" type="text/css" href="css/base.css" />
 		<script>document.documentElement.className="js";var supportsCssVars=function(){var e,t=document.createElement("style");return t.innerHTML="root: { --tmp-var: bold; }",document.head.appendChild(t),e=!!(window.CSS&&window.CSS.supports&&window.CSS.supports("font-weight","var(--tmp-var)")),t.parentNode.removeChild(t),e};supportsCssVars()||alert("Please view this demo in a modern browser that supports CSS Variables.");</script>
 		<style type="text/css">
@@ -36,8 +36,8 @@
 				</nav>
 				<nav class="frame__demos">
 					<a href="index.html" class="frame__demo">demo 1</a>
-					<a href="index2.html" class="frame__demo">demo 2</a>
-					<a href="index3.html" class="frame__demo frame__demo--current">demo 3</a>
+					<a href="index2.html" class="frame__demo frame__demo--current">demo 2</a>
+					<a href="index3.html" class="frame__demo">demo 3</a>
 				</nav>
 			</div>
 			<div class="content"></div>
@@ -65,16 +65,7 @@
 				gl_FragColor = gl_FragColor * texture2D(pointTexture, gl_PointCoord);
 			}
 		</script>
-		<script src="js/three.min.js"></script>
-		<script src="js/MeshSurfaceSampler.js"></script>
-		<script src="js/OBJLoader.js"></script>
-		<script src="js/EffectComposer.js"></script>
-		<script src="js/RenderPass.js"></script>
-		<script src="js/UnrealBloomPass.js"></script>
-		<script src="js/LuminosityHighPassShader.js"></script>
-		<script src="js/CopyShader.js"></script>
-		<script src="js/ShaderPass.js"></script>
-		<script src="js/demo3.js"></script>
+		<script src="js/demo2.js" type="module"></script>
 		<!--script src="https://tympanus.net/codrops/adpacks/cda.js"></script-->
 	</body>
 </html>

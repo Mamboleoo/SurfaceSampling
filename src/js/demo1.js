@@ -1,3 +1,7 @@
+import * as THREE from 'three';
+import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
+import { MeshSurfaceSampler } from 'three/examples/jsm/math/MeshSurfaceSampler.js';
+
 const elContent = document.querySelector('.content');
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(
@@ -8,7 +12,7 @@ const camera = new THREE.PerspectiveCamera(
 );
 
 const renderer = new THREE.WebGLRenderer({
-  antialias: true,
+  antialias: true
 });
 renderer.setSize(elContent.offsetWidth, elContent.offsetHeight);
 elContent.appendChild(renderer.domElement);
@@ -21,20 +25,19 @@ const group = new THREE.Group();
 scene.add(group);
 
 const sparkles = [];
+window.sparkles=sparkles;
 const sparklesGeometry = new THREE.BufferGeometry();
 const sparklesMaterial = new THREE.ShaderMaterial({
   uniforms: {
     pointTexture: {
-      value: new THREE.TextureLoader().load('assets/dotTexture.png')
+      value: new THREE.TextureLoader().load('dotTexture.png')
     }
   },
   vertexShader: document.getElementById("vertexshader").textContent,
   fragmentShader: document.getElementById("fragmentshader").textContent,
-  alphaTest: 1.0,
   depthTest: false,
   depthWrite: false,
-  blending: THREE.AdditiveBlending,
-  transparent: true
+  blending: THREE.AdditiveBlending
 });
 const points = new THREE.Points(sparklesGeometry, sparklesMaterial);
 group.add(points);
@@ -44,7 +47,7 @@ let sampler = null;
 const lines = [];
 let linesColors = [new THREE.Color(0xFAAD80).multiplyScalar(0.5), new THREE.Color(0xFF6767).multiplyScalar(0.5), new THREE.Color(0xFF3D68).multiplyScalar(0.5), new THREE.Color(0xA73489).multiplyScalar(0.5)];
 function initLines() {
-  sampler = new THREE.MeshSurfaceSampler(turtle).build();
+  sampler = new MeshSurfaceSampler(turtle).build();
   
   for (let i = 0; i < 6; i++) {
     sampler.sample(p1);
@@ -59,8 +62,8 @@ function initLines() {
 }
 
 let turtle = null;
-new THREE.OBJLoader().load(
-  "assets/Turtle_Model.obj",
+new OBJLoader().load(
+  "Turtle_Model.obj",
   (obj) => {
     turtle = obj.children[0];
     turtle.geometry.rotateX(Math.PI * -0.5);
@@ -71,22 +74,20 @@ new THREE.OBJLoader().load(
   (err) => console.error(err)
 );
 
+const tempSparklesArrayColors = [];
 function findNextVector(line) {
   let ok = false;
   while (!ok) {
     sampler.sample(p1);
 
-    if (p1.distanceTo(line.previous) < 2.5) {
+    if (p1.distanceTo(line.previous) < 2) {
       line.previous = p1.clone();
 
       const spark = new Sparkle();
-      spark.setup(line.previous, line.colorIndex);
+      spark.setup(line.previous);
       sparkles.push(spark);
 
-      const tempSparklesArrayColors = [];
-      sparkles.forEach(s => {
-        tempSparklesArrayColors.push(linesColors[s.colorIndex].r, linesColors[s.colorIndex].g, linesColors[s.colorIndex].b);
-      });
+      tempSparklesArrayColors.push(linesColors[line.colorIndex].r, linesColors[line.colorIndex].g, linesColors[line.colorIndex].b);
       sparklesGeometry.setAttribute("color", new THREE.Float32BufferAttribute(tempSparklesArrayColors, 3));
       
       ok = true;
@@ -95,13 +96,12 @@ function findNextVector(line) {
 }
 
 class Sparkle extends THREE.Vector3 {
-  setup(origin, colorIndex) {
-    this.add(origin).multiplyScalar(1.2);
+  setup(origin) {
+    this.add(origin).multiplyScalar(2);
     this.dest = origin;
 
     this._size = Math.random() * 5 + 0.5;
-    this.size = 0.5;
-    this.colorIndex = colorIndex;
+    this.size = 1;
     this.scaleSpeed = Math.random() * 0.03 + 0.03;
     this.stop = false;
   }
@@ -112,31 +112,34 @@ class Sparkle extends THREE.Vector3 {
     if (this.size < this._size) {
       this.size += this.scaleSpeed;
     } else {
-      if (this.distanceTo(this.dest) < 0.1) {
-        this.stop = true;
-      }
+      // if (this.distanceTo(this.dest) < 0.1) {
+      //   this.stop = true;
+      // }
     }
   }
 }
 
+let tempSparklesArray = [];
+let tempSparklesArraySizes = [];
 function render(a) {
   group.rotation.y += 0.002;
 
-  if (sparkles.length < 30000) {
+  if (sparkles.length < 40000) {
     lines.forEach(l => {
+      findNextVector(l);
       findNextVector(l);
       findNextVector(l);
     });
   }
 
-  const tempSparklesArray = [];
-  const tempSparklesArraySizes = [];
-  sparkles.forEach(s => {
+  sparkles.forEach((s, i) => {
     if (!s.stop) {
       s.update();
     }
-    tempSparklesArray.push(s.x, s.y, s.z);
-    tempSparklesArraySizes.push(s.size);
+    tempSparklesArray[(i * 3)] = s.x;
+    tempSparklesArray[(i * 3) + 1] = s.y;
+    tempSparklesArray[(i * 3) + 2] = s.z;
+    tempSparklesArraySizes[i] = s.size;
   });
   sparklesGeometry.setAttribute("position", new THREE.Float32BufferAttribute(tempSparklesArray, 3));
   sparklesGeometry.setAttribute("size", new THREE.Float32BufferAttribute(tempSparklesArraySizes, 1));

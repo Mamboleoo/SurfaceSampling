@@ -1,4 +1,9 @@
-console.clear();
+import * as THREE from 'three';
+import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
+import { MeshSurfaceSampler } from 'three/examples/jsm/math/MeshSurfaceSampler.js';
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 
 const elContent = document.querySelector('.content');
 const pixelRatio = 2;
@@ -17,9 +22,9 @@ renderer.setPixelRatio(pixelRatio);
 renderer.setSize(elContent.offsetWidth, elContent.offsetHeight);
 elContent.appendChild(renderer.domElement);
 
-const renderScene = new THREE.RenderPass(scene, camera);
+const renderScene = new RenderPass(scene, camera);
 
-const bloomPass = new THREE.UnrealBloomPass(
+const bloomPass = new UnrealBloomPass(
   new THREE.Vector2(elContent.offsetWidth, elContent.offsetHeight),
   1.5,
   0.4,
@@ -28,16 +33,11 @@ const bloomPass = new THREE.UnrealBloomPass(
 bloomPass.threshold = 0;
 bloomPass.strength = 0.6;
 
-const composer = new THREE.EffectComposer(renderer);
+const composer = new EffectComposer(renderer);
 composer.setPixelRatio(pixelRatio);
 composer.addPass(renderScene);
 composer.addPass(bloomPass);
 
-// const controls = new THREE.TrackballControls(camera, renderer.domElement);
-// controls.noPan = true;
-// controls.rotateSpeed = 1.5;
-// controls.maxDistance = 3.5;
-// controls.minDistance = 0.3;
 
 const group = new THREE.Group();
 scene.add(group);
@@ -48,7 +48,7 @@ const sparklesMaterial = new THREE.ShaderMaterial({
   uniforms: {
     pointTexture: {
       value: new THREE.TextureLoader().load(
-        "assets/dotTexture.png"
+        "dotTexture.png"
       )
     }
   },
@@ -75,7 +75,7 @@ let galaxyColors = [
   new THREE.Color("#0476d9").multiplyScalar(0.8)
 ];
 function dots() {
-  sampler = new THREE.MeshSurfaceSampler(whale).build();
+  sampler = new MeshSurfaceSampler(whale).build();
 
   for (let i = 0; i < 6; i++) {
     const linesMesh = new THREE.Line(new THREE.BufferGeometry(), linesMaterials[i % 2]);
@@ -88,9 +88,9 @@ function dots() {
 }
 
 let whale = null;
-const loader = new THREE.OBJLoader();
+const loader = new OBJLoader();
 loader.load(
-  "assets/Whale_Model.obj",
+  "Whale_Model.obj",
   (obj) => {
     whale = obj.children[0];
     whale.geometry.scale(0.3, 0.3, 0.3);
@@ -131,14 +131,8 @@ function updateSparklesGeometry() {
     tempSparklesArraySizes.push(s.size);
     tempSparklesArrayColors.push(s.color.r, s.color.g, s.color.b);
   });
-  sparklesGeometry.setAttribute(
-    "color",
-    new THREE.Float32BufferAttribute(tempSparklesArrayColors, 3)
-  );
-  sparklesGeometry.setAttribute(
-    "size",
-    new THREE.Float32BufferAttribute(tempSparklesArraySizes, 1)
-  );
+  sparklesGeometry.setAttribute("color", new THREE.Float32BufferAttribute(tempSparklesArrayColors, 3));
+  sparklesGeometry.setAttribute("size", new THREE.Float32BufferAttribute(tempSparklesArraySizes, 1));
 }
 
 class Sparkle extends THREE.Vector3 {
@@ -234,10 +228,7 @@ function render(a) {
         nextDot(l);
       }
       const tempVertices = new Float32Array(l.coordinates);
-      l.geometry.setAttribute(
-        "position",
-        new THREE.BufferAttribute(tempVertices, 3)
-      );
+      l.geometry.setAttribute("position", new THREE.BufferAttribute(tempVertices, 3));
       l.geometry.computeBoundingSphere();
     });
     updateSparklesGeometry();
@@ -250,10 +241,7 @@ function render(a) {
     tempSparklesArray.push(s.x, s.y, s.z);
   });
 
-  sparklesGeometry.setAttribute(
-    "position",
-    new THREE.Float32BufferAttribute(tempSparklesArray, 3)
-  );
+  sparklesGeometry.setAttribute("position", new THREE.Float32BufferAttribute(tempSparklesArray, 3));
 
   let tempStarsArray = [];
   stars.forEach((s) => {
@@ -261,40 +249,10 @@ function render(a) {
     tempStarsArray.push(s.x, s.y, s.z);
   });
 
-  starsGeometry.setAttribute(
-    "position",
-    new THREE.Float32BufferAttribute(tempStarsArray, 3)
-  );
+  starsGeometry.setAttribute("position", new THREE.Float32BufferAttribute(tempStarsArray, 3));
 
-  // controls.update();
   composer.render();
 }
-
-window.addEventListener("mousemove", onMouseMove);
-function onMouseMove(e) {
-  const x = THREE.MathUtils.mapLinear(
-    e.clientY,
-    0,
-    elContent.offsetHeight,
-    -0.3,
-    0.3
-  );
-  const y = THREE.MathUtils.mapLinear(
-    e.clientX,
-    0,
-    elContent.offsetWidth,
-    -0.3,
-    0.3
-  );
-  // gsap.to(group.rotation, {
-  //   y: y,
-  //   x: x,
-  //   duration: 0.9,
-  //   ease: "power1.out"
-  // });
-}
-
-window.addEventListener("resize", onWindowResize);
 
 function onWindowResize() {
   camera.aspect = elContent.offsetWidth / elContent.offsetHeight;
@@ -303,3 +261,4 @@ function onWindowResize() {
   renderer.setSize(elContent.offsetWidth, elContent.offsetHeight);
   bloomPass.setSize(elContent.offsetWidth, elContent.offsetHeight);
 }
+window.addEventListener("resize", onWindowResize);

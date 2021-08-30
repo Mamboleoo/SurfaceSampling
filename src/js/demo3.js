@@ -1,3 +1,7 @@
+import * as THREE from 'three';
+import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
+import { MeshSurfaceSampler } from 'three/examples/jsm/math/MeshSurfaceSampler.js';
+
 const elContent = document.querySelector('.content');
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(
@@ -23,10 +27,10 @@ scene.add(group);
 let sampler = null;
 let elephant = null;
 let paths = [];
-new THREE.OBJLoader().load(
-  "assets/Elephant_Model.obj",
-  (obj) => {    
-    sampler = new THREE.MeshSurfaceSampler(obj.children[0]).build();
+new OBJLoader().load(
+  "Elephant_Model.obj",
+  (obj) => { 
+    sampler = new MeshSurfaceSampler(obj.children[0]).build();
     
     for (let i = 0;i < 4; i++) {
       const path = new Path(i);
@@ -37,7 +41,10 @@ new THREE.OBJLoader().load(
     renderer.setAnimationLoop(render);
   },
   (xhr) => console.log((xhr.loaded / xhr.total) * 100 + "% loaded"),
-  (err) => console.error(err)
+  (err) => {
+    console.log('oops');
+    console.error(err)
+  }
 );
 
 const tempPosition = new THREE.Vector3();

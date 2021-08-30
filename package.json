@@ -1,0 +1,25 @@
+{
+  "name": "surfacesampling",
+  "version": "1.0.0",
+  "description": "Demos to illustrate the Codrops tutorial about Surface Sampling in Three.js",
+  "scripts": {
+    "start": "parcel src/index.html --open",
+    "build": "parcel build src/index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mamboleoo/SurfaceSampling.git"
+  },
+  "author": "Codrops",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Mamboleoo/SurfaceSampling/issues"
+  },
+  "homepage": "https://github.com/Mamboleoo/SurfaceSampling#readme",
+  "devDependencies": {
+    "parcel": "^2.0.0-rc.0",
+    "@parcel/config-default": "2.0.0-rc.0",
+    "parcel-reporter-static-files-copy": "^1.3.0",
+    "three": "^0.132.2"
+  }
+}
