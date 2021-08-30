@@ -1,6 +1,6 @@
 # Surface Sampling in Three.js
 
-*A description of the demo goes here.*
+Demos for the tutorial on how to use the MeshSurfaceSampler in Three.js to create interesting effects.
 
 ![Image Title](https://tympanus.net/codrops/wp-content/uploads/2021/08/SurfaceSampling.jpg)
 
