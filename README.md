@@ -31,11 +31,14 @@ npm run build
 
 ## Credits
 
-- *third party resources*
+- Elephant by Poly by Google [CC-BY](https://creativecommons.org/licenses/by/3.0/) via [Poly Pizza](https://poly.pizza/m/cx0-TiCjDOx)
+- Turtle by Poly by Google [CC-BY](https://creativecommons.org/licenses/by/3.0/) via [Poly Pizza](https://poly.pizza/m/fklSEvGm1Q8)
+- Whale by Poly by Google [CC-BY](https://creativecommons.org/licenses/by/3.0/) via [Poly Pizza](https://poly.pizza/m/15cXqVGk0jA)
+
 
 ## Misc
 
-Follow *Author*: [Twitter](), [Dribbble](), [Google+](), [GitHub]() 
+Follow Mamboleoo: [Twitter](https://twitter.com/Mamboleoo), [Website](https://www.mamboleoo.be/), [Instagram](http://instagram.com/)
 
 Follow Codrops: [Twitter](http://www.twitter.com/codrops), [Facebook](http://www.facebook.com/codrops), [GitHub](https://github.com/codrops), [Instagram](https://www.instagram.com/codropsss/)
 
