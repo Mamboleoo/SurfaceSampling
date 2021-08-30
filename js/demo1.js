@@ -24,7 +24,7 @@ let sampler = null;
 let elephant = null;
 let paths = [];
 new THREE.OBJLoader().load(
-  "assets/Mesh_Elephant.obj",
+  "assets/Elephant_Model.obj",
   (obj) => {    
     sampler = new THREE.MeshSurfaceSampler(obj.children[0]).build();
     
