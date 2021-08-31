@@ -2,7 +2,7 @@
 
 Demos for the tutorial on how to use the MeshSurfaceSampler in Three.js to create interesting effects.
 
-![Image Title](https://tympanus.net/codrops/wp-content/uploads/2021/08/SurfaceSampling.jpg)
+![SurfaceSampling](https://tympanus.net/codrops/wp-content/uploads/2021/08/SurfaceSampling_featured.jpg)
 
 [Article on Codrops](https://tympanus.net/codrops/?p=56350)
 
