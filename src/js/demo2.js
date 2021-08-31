@@ -105,7 +105,6 @@ loader.load(
 const p1 = new THREE.Vector3();
 function nextDot(line) {
   let ok = false;
-  safe = 0;
   while (!ok) {
     sampler.sample(p1);
     if (line.previous && p1.distanceTo(line.previous) < 0.3) {
